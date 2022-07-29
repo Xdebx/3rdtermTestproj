@@ -46,6 +46,6 @@ class User extends Authenticatable
 
     public function customers() 
     {
-        return $this->belongsTo('App\Models\Customer');
+        return $this->hasOne('App\Models\Customer', 'user_id');
     }
 }

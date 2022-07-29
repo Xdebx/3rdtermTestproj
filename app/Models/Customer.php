@@ -37,6 +37,6 @@ class Customer extends Model
 
     public function users()
     {
-        return $this->hasOne('App\Models\User');
+        return $this->belongsTo('App\Models\User', 'user_id');
     }
 }

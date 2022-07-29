@@ -38,8 +38,10 @@ Route::get('/', function () {
 //    'uses' => 'CustomerController@destroy',
 //     'as' => 'customer.destroy' 
 //  ]);
-  
- Route::resource('customer', 'CustomerController');
+ 
+  Route::resource('customer', 'CustomerController');
+  Route::post('/customer/import', 'CustomerController@import')->name('customer-import');
+ 
 
 
 

@@ -1,4 +1,5 @@
-@extends('layouts.master')
+@extends('layouts.main')
+{{-- @extends('layouts.master') --}}
 {{-- @extends('layouts.base')   
 @extends('layouts.app') --}}
 @section('content')
@@ -18,7 +19,7 @@ strong {
     border-radius: 50rem;
 }
 </style>
-<div class="container user-profile">
+<div class="container emp-profile">
             <form method="post">
                 @foreach($customers as $customer)
                 <div class="row">

@@ -74,10 +74,10 @@
 
 
 
+@extends('layouts.main')
 
-
-@extends('layouts.base')
-@extends('layouts.app')
+{{-- @extends('layouts.base')
+@extends('layouts.app') --}}
 @section('content')
 <div class="container">
     <br />

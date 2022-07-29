@@ -31,4 +31,9 @@ class Pet extends Model
         return $this->belongTo('App\Models\Customer', 'pet_id');
         
     }
+    public function breeds() 
+    {
+        return $this->belongTo('App\Models\Breed', 'petb_id');
+        
+    }
 }

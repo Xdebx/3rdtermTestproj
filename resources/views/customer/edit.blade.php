@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.main')
 {{-- @extends('layouts.base')
 @extends('layouts.app') --}}
 @section('content')

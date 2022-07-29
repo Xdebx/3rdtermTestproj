@@ -7,15 +7,21 @@ use Illuminate\Http\Request;
 use App\DataTables\CustomersDataTable;
 use DataTables;
 use App\Models\Pet;
+use App\Models\User;
+use App\Models\Breed;
 use Yajra\DataTables\Html\Builder;
 use Redirect;
 use View;
 use DB;
 use Validator;
 use Auth;
-use App\Models\User;
 use Hash;
-use Input;
+use App\Imports\CustomerImports;
+use Excel;
+use App\Rules\ExcelRule;
+
+
+
 class CustomerController extends Controller
 {
     /**
@@ -183,6 +189,17 @@ class CustomerController extends Controller
         //dd($customers);
         return $dataTable->render('customer.customers', compact('customers'));
     }
+
+    public function import(Request $request) {
+        //! import excel file
+       
+       $request->validate([
+               'customer_upload' => ['required', new ExcelRule($request->file('customer_upload'))],
+       ]);
+       // dd($request);
+       Excel::import(new CustomerImports, request()->file('customer_upload'));
+        return redirect()->back()->with('success', 'Excel file Imported Successfully');
+   }
 
 
 //     public function getCustomers(Builder $builder) {

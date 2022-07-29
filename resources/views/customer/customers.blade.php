@@ -1,6 +1,7 @@
 {{-- @extends('layouts.master') --}}
-@extends('layouts.base')   
-@extends('layouts.app')
+{{-- @extends('layouts.base')   
+@extends('layouts.app') --}}
+@extends('layouts.main')
 @section('body')
 {{-- @section('content') --}}
   <div class="container">
@@ -29,8 +30,8 @@
 
 {{-- =================================================================================================== --}}
 <div class="col-xs-6">
-  {{-- <form method="post" enctype="multipart/form-data" action="{{ url('/customer/import') }}"> --}}
-    <form method="post" enctype="multipart/form-data" action="#">
+  <form method="post" enctype="multipart/form-data" action="{{ url('/customer/import') }}">
+    {{-- <form method="post" enctype="multipart/form-data" action="#"> --}}
      @csrf
    <input type="file" id="uploadName" name="customer_upload" required>
 </div>
