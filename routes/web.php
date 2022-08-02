@@ -16,47 +16,20 @@ Route::get('/', function () {
    return view('welcome');
  });
 
-// Route::get('/', [
-//     'uses' => 'TransactionController@getIndex',
-//      'as' => 'transact.index' 
-//   ]);
-  
-
-//   Route::get('/customers', [
-//    'uses' => 'CustomerController@getCustomers',
-//     'as' => 'getCustomers',
-//    //  'middleware' => 'role:customer',
-//     'middleware' => 'auth'
-//  ]);
-
-// Route::get('/customer/edit/{id}', [
-//     'uses' => 'CustomerController@edit',
-//      'as' => 'customer.edit' 
-//   ]);
-
-//   Route::post('/customer/edit/{id}', [
-//    'uses' => 'CustomerController@destroy',
-//     'as' => 'customer.destroy' 
-//  ]);
- 
-  Route::resource('customer', 'CustomerController');
+ // option 1
+  // Route::resource('customer', 'CustomerController');
+  // Route::post('/customer/import', 'CustomerController@import')->name('customer-import');
+// option 2
+  Route::get('/Customer/edit/{id}','CustomerController@edit')->name('customer.edit');
+  Route::put('/Customer/update{id}',['uses' => 'CustomerController@update','as' => 'customer.update']); 
+  Route::delete('/Customer/delete/{id}',['uses' => 'CustomerController@destroy','as' => 'customer.destroy']);
   Route::post('/customer/import', 'CustomerController@import')->name('customer-import');
+
+  Route::get('/Employee/edit/{id}','EmployeeController@edit')->name('employee.edit');
+  Route::put('/Employee/update{id}',['uses' => 'EmployeeController@update','as' => 'employee.update']); 
+  Route::delete('/Employee/delete/{id}',['uses' => 'EmployeeController@destroy','as' => 'employee.destroy']);
+  Route::post('/employee/import', 'EmployeeController@import')->name('employee-import');
  
-
-
-
-// Route::get('/customer', [CustomerController::class, 'index'])->name('customer.index');
-// // Route::get('/customer/create', [CustomerController::class, 'create'])->name('customers.create');
-// // Route::post('/customer/store', [CustomerController::class, 'store'])->name('customers.store');
-// Route::put('/customers/{id}/update', [CustomerController::class, 'update'])->name('customer.update');
-
-// Route::get('/customers/{id}/edit', [CustomerController::class, 'edit'])->name('customer.edit');
-// Route::delete('/customers/{id}', [CustomerController::class, 'destroy'])->name('customer.destroy');
-
-// Route::group(['middleware' => ['auth']], function () {
-//    Route::resource('customer', 'CustomerController')->except(['index']);
- 
-//   });
 
   Route::group(['prefix' => 'user'], function(){
    Route::group(['middleware' => 'guest'], function() {
@@ -65,7 +38,7 @@ Route::get('/', function () {
              'as' => 'user.signups',
                  ]);
              Route::post('signup', [
-                     'uses' => 'userController@postSignup',
+                     'uses' => 'UserController@postSignup',
                      'as' => 'user.signup',
                  ]);
              Route::get('signin', [
@@ -76,37 +49,53 @@ Route::get('/', function () {
                      'uses' => 'LoginController@postSignin',
                      'as' => 'user.signin',
                  ]);
+
+                 Route::get('esignup', [
+                  'uses' => 'UserController@getEsignup',
+                  'as' => 'user.esignups',
+                      ]);
+
+                 Route::post('esignup', [
+                        'uses' => 'UserController@postEsignup',
+                        'as' => 'user.esignup',
+                    ]);
+
+
+
          });
    
-   Route::group(['middleware' => 'role:customer'], function() {
-
+   Route::group(['middleware' => 'role:customer,admin'], function() {
        Route::get('profile', [
              'uses' => 'UserController@getProfile',
              'as' => 'user.profile',
-            //  'middleware' => 'role:customer'
           ]);
-         });
+       Route::get('eprofile', [
+            'uses' => 'UserController@getEprofile',
+            'as' => 'user.eprofile',
+         ]);
+        });  
      });
 
-     Route::get('/customers', [
+   Route::get('/customers', [
       'uses' => 'CustomerController@getCustomers',
        'as' => 'getCustomers',
-       'middleware' => 'role:customer',
-      //  'middleware' => 'auth'
+       'middleware' => 'role:admin',
     ]);
-    //Route::resource('customer', 'CustomerController')->except(['index']);
 
-   //  Route::resource('customer', 'CustomerController');
-
-
-           
-       Route::get('logout',[
+    Route::get('/employees', [
+      'uses' => 'EmployeeController@getEmployees',
+       'as' => 'getEmployees',
+       'middleware' => 'role:admin',
+ 
+    ]);
+    
+     Route::get('logout',[
           'uses' => 'LoginController@logout',
           'as' => 'user.logout',
           'middleware'=>'auth'
          ]);
 
-
+     Route::get('/dashboard',['uses'=>'DashboardController@index','as'=>'dashboard.index'])->middleware('role:admin');
 
    //     Route::get('add-to-cart/{id}',[
    //           'uses' => 'ProductController@getAddToCart',

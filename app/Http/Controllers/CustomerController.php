@@ -61,8 +61,9 @@ class CustomerController extends Controller
           'name' => $request->input('fname').' '.$request->lname,
             'email' => $request->input('email'),
             'password' => bcrypt($request->input('password')),
-            'role' => $request->input('role')
+            // 'role' => $request->input('role')
             // 'role' => $request->input('role').''.$request->role='customer'
+             'role' => 'customer'
         ]);
          $user->save();
          $customer = new Customer;
@@ -101,7 +102,7 @@ class CustomerController extends Controller
     public function show($customer_id)
     {
         $customers = Customer::find($customer_id);
-        return view('user.profile',compact('customer'));
+        return view('user.profile',compact('customers'));
     }
 
     /**
@@ -179,7 +180,7 @@ class CustomerController extends Controller
     {
         Customer::where('user_id',$user_id)->delete();
         User::destroy($user_id);
-        return Redirect::to('/customers')->with('success','Customer deleted!');
+        return Redirect::to('/customers')->with('success','Customer Deleted!');
     }
 
     public function getCustomers(CustomersDataTable $dataTable)

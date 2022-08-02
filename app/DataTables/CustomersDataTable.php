@@ -33,7 +33,7 @@ class CustomersDataTable extends DataTable
             ->eloquent($customers)
             ->addColumn('action', function($row) {
                     return "
-                    <form action=". route('customer.destroy', $row->customer_id). " method= \"POST\" >". csrf_field() . '<input name="_method" type="hidden" value="DELETE">
+                    <form action=". route('customer.destroy', $row->user_id). " method= \"POST\" >". csrf_field() . '<input name="_method" type="hidden" value="DELETE">
                     <button class="btn btn-danger" type="submit">Delete</button>
                       </form>';
             })
@@ -44,7 +44,7 @@ class CustomersDataTable extends DataTable
                 })
             ->addColumn('img_path', function ($customers) {
                     $url= asset('images/'.$customers->img_path);
-                    return '<img src="'.$url.'" border="0" width="90" height="90" align="center" />';
+                    return '<img src="'.$url.'" border="0" width="90" height="90" align="center">';
                 })
 
             ->rawColumns(['img_path','pets','user','action']);

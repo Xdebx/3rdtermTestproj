@@ -30,7 +30,7 @@
      
          <a class="navbar-brand" href="home"><strong>PET</strong><span>CLINIC</span></a>
          <a class="navbar-brand" href="{{ url('customers') }}">Customers</a>
-         <a class="navbar-brand" href="#">Employees</a>
+         <a class="navbar-brand" href="{{ url('employees') }}">Employees</a>
          <a class="navbar-brand" href="#">Pets</a>
        </div>
        
@@ -56,14 +56,21 @@
                             class="caret"></span></a>
       <ul class="dropdown-menu">
         @if (Auth::check())
-          <li><a href="{{ route('user.profile') }}"><strong>{{Auth::User()->name}}</strong></a></li>
+          @if (auth()->user()->role === 'admin') 
+          <li><a href="{{ route('user.eprofile') }}"><i class="fa fa-user"></i> <strong>{{Auth::User()->name}}</strong><i style="font-size:15px; color:red"> {{Auth::User()->role}}</i></a></li>
           <li role="separator" class="divider"></li>
           <li><a href="{{ route('user.logout') }}">Logout</a></li>
+        @elseif (auth()->user()->role === 'customer')
+          <li><a href="{{ route('user.profile') }}"><i class="fa fa-user"></i> <strong>{{Auth::User()->name}}</strong><i style="font-size:15px; color:red"> {{Auth::User()->role}}</i></a></li>
+          <li role="separator" class="divider"></li>
+          <li><a href="{{ route('user.logout') }}">Logout</a></li>
+          @endif
         @else
-          <li><a href="{{ route('user.signup') }}">Signup</a></li>
+          <li><a href="{{ route('user.signup') }}"><i class="fas fa-user-circle" style="color:red"></i> Signup as customer</a></li>
+          <li><a href="{{ route('user.esignup') }}"><i class="fas fa-user" style="color:blue"></i> Signup as admin</a></li>
           <li><a href="{{ route('user.signin') }}">Signin</a></li>
         @endif
-                 
+        {{-- <i class="fa-solid fa-user-crown"></i> --}}
              </ul>
            </li>
          </ul>
