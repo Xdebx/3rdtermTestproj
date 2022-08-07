@@ -1,6 +1,4 @@
-@extends('layouts.main')
-{{-- @extends('layouts.base')
-@extends('layouts.app') --}}
+ @extends('layouts.main')
 @section('content')
 <div class="container">
   <h2>Edit Customer section</h2>
@@ -72,8 +70,7 @@
   <div class="alert alert-danger">{{ $errors->first('password') }}</div>
  @endif 
  @endforeach
-</div> 
-
+</div>
 
 {{-- <div class="form-group"> 
   <label for="password" class="control-label">Password:</label>
@@ -96,11 +93,10 @@
   @endforeach
 </div> --}}
 
-
-<div class="form-group">
+ <div class="form-group">
   <label for="image" class="control-label">Customer Image:</label>
   <input type="file" class="form-control" id="image" name="image">
-   <img src="{{ asset('images/'.$customer->img_path) }}" width ="100" height="100" class="img-circle" enctype="multipart/form-data"/>
+   <img src="{{ asset('images/'.$customer->img_path) }}" width ="60" height="60" class="img-circle" enctype="multipart/form-data"/>
   @if($errors->has('img_path'))
    <div class="alert alert-danger">{{ $errors->first('img_path') }}</div>
   @endif
@@ -111,4 +107,4 @@
   </div>     
 </div>
 {!! Form::close() !!} 
-@endsection
+@endsection 

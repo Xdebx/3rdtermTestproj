@@ -24,7 +24,7 @@ class EmployeesDataTable extends DataTable
             ->eloquent($query)
             ->addColumn('action', 'customers.action')*/
 
-            $employees = Employee::with('users');
+            $employees = Employee::with('users')->orderBy('emp_id','DESC');
             //$customers =  Customer::with(['user','pets.pet_name'])->select('customers.*');
      
              return datatables()

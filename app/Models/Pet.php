@@ -4,23 +4,25 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 
 class Pet extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
     public $table = 'pets';
     public $primaryKey = 'pet_id';
     public $timestamps = true;
 
     protected $guarded = ['pet_id','img_path'];
-    protected $fillable = ['customer_id','petb_id','pname','gender','age','img_path'];
+    protected $fillable = ['customer_id','breed','pname','gender','age','img_path'];
 
    public static $rules = [ 
                'customer_id' =>'required',
-               'petb_id'=>'required',
                'pname'=>'required',
+               'breed'=>'required',
                 'gender'=>'required',
                 'age'=>'numeric',
                 'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg'
@@ -28,12 +30,15 @@ class Pet extends Model
 
     public function customers() 
     {
-        return $this->belongTo('App\Models\Customer', 'pet_id');
-        
+        return $this->belongsTo('App\Models\Customer', 'customer_id')->withTrashed();
+        // return $this->belongsTo(Customer::class, 'customer_id');
+       
     }
+    
     public function breeds() 
     {
-        return $this->belongTo('App\Models\Breed', 'petb_id');
+        return $this->belongsTo('App\Models\Breed', 'petb_id');
+        // return $this->belongsTo(Breed::class, 'petb_id');
         
     }
 }

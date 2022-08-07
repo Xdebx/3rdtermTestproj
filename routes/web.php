@@ -23,12 +23,28 @@ Route::get('/', function () {
   Route::get('/Customer/edit/{id}','CustomerController@edit')->name('customer.edit');
   Route::put('/Customer/update{id}',['uses' => 'CustomerController@update','as' => 'customer.update']); 
   Route::delete('/Customer/delete/{id}',['uses' => 'CustomerController@destroy','as' => 'customer.destroy']);
+  Route::get('/customer/restore/{id}',['uses' => 'CustomerController@restore','as' => 'customer.restore']);
   Route::post('/customer/import', 'CustomerController@import')->name('customer-import');
 
   Route::get('/Employee/edit/{id}','EmployeeController@edit')->name('employee.edit');
   Route::put('/Employee/update{id}',['uses' => 'EmployeeController@update','as' => 'employee.update']); 
   Route::delete('/Employee/delete/{id}',['uses' => 'EmployeeController@destroy','as' => 'employee.destroy']);
   Route::post('/employee/import', 'EmployeeController@import')->name('employee-import');
+
+  Route::get('/Grooming/create','GroomingServiceController@create')->name('grooming.create');
+  Route::post('/Grooming/store','GroomingServiceController@store')->name('grooming.store');
+  Route::get('/Grooming/edit/{id}','GroomingServiceController@edit')->name('grooming.edit');
+  Route::put('/Grooming/update{id}',['uses' => 'GroomingServiceController@update','as' => 'grooming.update']);
+  Route::delete('/Grooming/delete/{id}',['uses' => 'GroomingServiceController@destroy','as' => 'grooming.destroy']);
+  Route::post('/Grooming/import', 'GroomingServiceController@import')->name('grooming-import');
+
+  Route::get('/Pet/create','PetController@create')->name('pet.create');
+  Route::post('/Pet/store','PetController@store')->name('pet.store');
+  Route::get('/Pet/edit/{id}','PetController@edit')->name('pet.edit')->middleware('role:admin');
+  Route::put('/Pet/update{id}',['uses' => 'PetController@update','as' => 'pet.update']);
+  Route::delete('/Pet/delete/{id}',['uses' => 'PetController@destroy','as' => 'pet.destroy']);
+  Route::post('/Pet/import', 'PetController@import')->name('pet-import');
+
  
 
   Route::group(['prefix' => 'user'], function(){
@@ -88,6 +104,16 @@ Route::get('/', function () {
        'middleware' => 'role:admin',
  
     ]);
+
+    Route::get('/grooming', [
+      'uses' => 'GroomingServiceController@getGroomingServices',
+       'as' => 'getGroomingServices',
+       'middleware' => 'role:admin',   ]);
+
+    Route::get('/pets', [
+      'uses' => 'PetController@getPets',
+        'as' => 'getPets',
+        'middleware' => 'role:customer',   ]);
     
      Route::get('logout',[
           'uses' => 'LoginController@logout',

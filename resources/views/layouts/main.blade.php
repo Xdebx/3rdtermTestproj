@@ -33,15 +33,16 @@ th {
 /*.container .emp-profile */
 .container .emp-profile{
   border: 1px solid;
-  padding: 5px;
-  box-shadow: 5px 5px 5px #888888;
-  color: #800080;
+  padding: 2px;
+  box-shadow: 5px 5px 5px hsl(186, 100%, 45%);
+  color: #00FFFF;;
 }
 
 .emp-profile{
    /*padding: 2%;*/
-   margin-top: 15%;
+   margin-top: 10%;
     margin-bottom: 10%;
+    width: 50%;
     border-radius: 1.5rem;
     background: #fff;
 }
@@ -55,6 +56,14 @@ html {
  a:hover {
   background-color: #00FFFF;
   color: #FFFFFF;
+  transition: 0.5s;
+  /* background:#00FFFF;
+  color: black;
+  box-shadow: 0px 0px 40px #00FFFF; 
+  border: 2px solid #00FFFF;
+  /* border-radius: 5px; */
+  /* border-radius: 20px 40px 60px 80px; */
+  border-radius: 10px 30px 50px 60px; */
 }
 .container-fluid{
   font-family: "Roboto", sans-serif;
@@ -119,8 +128,9 @@ input {
 }
 body {
   /*background: #76b852;  fallback for old browsers */
-  /*background: rgb(141,194,111);*/
-background: radial-gradient(#224646,#182828) repeat;
+  /* background: rgb(141,194,111); */
+  background: radial-gradient(#224646,#182828) no-repeat;
+  /* background-color: #f9f9fa */
   /*background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);*/
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
@@ -138,6 +148,9 @@ label {
 
 }
 h2 {
+    color: #fff;
+}
+h6 {
     color: #fff;
 }
 </style>

@@ -31,7 +31,9 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customers = Customer::with('pets')->get();
+        // $customers = Customer::with('pets')->get();
+        $customers = Customer::withtrashed()->with('pets', 'users')->orderBy('customer_id','DESC');
+        // $customers = Customer::with('pets')->get;
         return View::make('customer.customers',compact('customers'));
     }
 
@@ -166,7 +168,7 @@ class CustomerController extends Controller
             'password' => bcrypt($request->input('password')),
         ]);
 
-        return Redirect::to('/customers')->with('success','Customer has been updated!');
+        return redirect()->route('user.profile');
        
     }
 
@@ -176,17 +178,142 @@ class CustomerController extends Controller
      * @param  \App\Models\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function destroy($user_id)
+    // public function destroy($user_id)
+    public function destroy($customer_id)
     {
-        Customer::where('user_id',$user_id)->delete();
-        User::destroy($user_id);
-        return Redirect::to('/customers')->with('success','Customer Deleted!');
+        //! User and customer lang nadedelete 
+
+        // Customer::where('user_id',$user_id)->delete();
+        // User::destroy($user_id);
+
+    //=========================================================================
+        //! Pet and customer lang nadedelete
+
+        Customer::where('customer_id',$customer_id)->delete();
+        Pet::where('customer_id', $customer_id)->delete();
+        // User::where('id', $customer_id)->delete();
+       
+    //=========================================================================
+        //! goal delete customer, pet and user
+
+        // Customer::where('customer_id',$customer_id)->delete();
+        // Pet::where('customer_id', $customer_id)->delete();
+        // User::where('id', $customer_id)->delete();
+
+        // Customer::with('users', 'pets')->where('customer_id',$customer_id)->delete();
+
+        // Customer::where('customer_id',true)->get()->each()->delete();
+        // Pet::destroy($customer_id);
+    //=========================================================================
+        // $customer = Customer::findOrFail($customer_id);
+        // $customer->delete();
+
+        // Customer::where('customer_id',$customer_id)->delete();
+        // User::destroy($customer_id);
+        // User::withTrashed()->find($customer_id)->delete();
+
+        return Redirect::to('/customers')->with('success','Customer deleted successfully!');
     }
+
+   
+
+    // public function restore(Request $request, $user_id)  
+    public function restore(Request $request,$customer_id)  
+    {
+         //! User and customer lang restore
+
+        //    Customer::withTrashed()->where('customer_id',$customer_id)->restore();
+        //     $request ->user()->withTrashed()->restore();
+
+    //=========================================================================
+
+        //! Pet and customer lang restore
+
+            // Customer::withTrashed()->where('customer_id',$customer_id)->restore();
+            // Pet::withTrashed()->where('customer_id', $customer_id)->restore();
+
+    //=========================================================================
+            //! goal Restore pet, customer and user
+            Customer::withTrashed()->where('customer_id',$customer_id)->restore();
+            Pet::withTrashed()->where('customer_id', $customer_id)->restore();
+            User::withTrashed()->where('id', $customer_id)->restore();
+
+
+
+
+            // $request ->pet('customer_id')->withTrashed()->restore();
+
+            // Customer::with('pets', 'users')->where('customer_id',$customer_id)->restore();
+            // $customers->user()->withTrashed()->restore();
+
+              //=========================================================================
+        //    User::with('customers')->where('id',$user_id)->withTrashed()->restore();
+
+
+
+        // Customer::withTrashed()->where('user_id',$user_id)->restore();
+        // User::withTrashed()->where('customer_id',$customer_id)->restore();
+        // $request = User::withTrashed()->restore();
+        // $request->pet()->withTrashed()->restore();
+
+        // User::restore($user_id);
+
+
+
+        // $request->user()->withTrashed()->first()->restore();
+        // $request->user()->withTrashed()->first();
+        // $request = Customer::withTrashed()->where('customer_id',$customer_id)->restore();
+        // $request->user()->withTrashed()->restore();
+        // User::withTrashed()->find($user_id)->restore();
+        // Customer::where('user_id',$user_id)->restore();
+        // User::restore($user_id);
+        return Redirect::to('/customers')->with('success','Customer restore successfully!');
+    }
+
+
+    // public function restore($id)
+    // {
+    //   $customers = Customer::onlyTrashed()->find($id);
+    //   $customers->restore();
+
+    // //   $customerss = Customer::with('pets')->find($id);
+    // //   $customerss->pets()->restore();
+
+    //   $customer =  Customer::with('users')->find($id);
+    //   $customer->user()->restore();
+
+    //   return Redirect::to('/customers')->with('success','Customer restore successfully!');
+    // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public function getCustomers(CustomersDataTable $dataTable)
     {
         //$pets = Pet::with('customer')->get();
-       $customers = Customer::with('pets')->get();
+    //    $customers = Customer::with('pets')->get();
+
+//  ! yung withTrashed pwedeng sa model na lang
+    // $customers = Customer::withTrashed()->with('pets', 'users')->orderBy('customer_id','DESC');
+     $customers = Customer::with('pets', 'users')->orderBy('customer_id','DESC');
         //dd($customers);
         return $dataTable->render('customer.customers', compact('customers'));
     }
@@ -264,5 +391,19 @@ class CustomerController extends Controller
 //                 return view('customer.customers', compact('html'));
 
 //                 }
+
+
+
+
+
+// public function getGroomingServices(GroomingServiceDataTable $dataTable)
+//     {
+//         //$pets = Pet::with('customer')->get();
+//        $groomingservices = GroomingService::all();
+//         //dd($customers);
+//         return $dataTable->render('groomingservice.groomingservices', compact('groomingservices'));
+//     }
+
+
 
 }

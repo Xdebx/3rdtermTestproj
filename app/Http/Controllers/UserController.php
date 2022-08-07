@@ -67,7 +67,7 @@ class UserController extends Controller
     $customers = DB::table('customers')
 
         ->leftJoin('users', 'id','customers.user_id')
-        ->select('customers.customer_id','users.email','customers.fname', 'customers.lname','customers.addressline','customers.phone','customers.zipcode','customers.img_path')
+        ->select('customers.customer_id','users.email','customers.title', 'customers.fname', 'customers.lname','customers.addressline','customers.phone','customers.zipcode','customers.img_path')
         ->where('customers.user_id','=',$profile)
         ->get();
     return view('user.profile',compact('customers'));
@@ -131,24 +131,6 @@ class UserController extends Controller
         return view('user.eprofile',compact('employees'));
         }
     
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     public function getLogout(){

@@ -1,6 +1,3 @@
-{{-- @extends('layouts.master') --}}
-{{-- @extends('layouts.base')   
-@extends('layouts.app') --}}
 @extends('layouts.main')
 @section('body')
 {{-- @section('content') --}}
@@ -9,29 +6,10 @@
     @if ( Session::has('success'))
       <div class="alert alert-success">
         <p>{{ Session::get('success') }}</p>
-      </div><br />
+      </div><br/>
      @endif
-     {{-- <div class="col-xs-6">
-      <form method="post" enctype="multipart/form-data" action="{{ url('/customer/import') }}">
-         @csrf
-       <input type="file" id="uploadName" name="album_upload" required>
-   </div>
-@error('album_upload')
-     <small>{{ $message }}</small>
-   @enderror
-        <button type="submit" class="btn btn-info btn-primary " >Import Excel File</button>
-        </form>  --}}
-{{-- =================================================================================================== --}}
-
-     {{-- <a href="#" data-toggle="modal" data-target="#customerModal" class="btn btn-primary a-btn-slide-text">
-        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-        <span><strong>Add new customer</strong></span>            
-    </a> --}}
-
-{{-- =================================================================================================== --}}
 <div class="col-xs-6">
   <form method="post" enctype="multipart/form-data" action="{{ url('/customer/import') }}">
-    {{-- <form method="post" enctype="multipart/form-data" action="#"> --}}
      @csrf
    <input type="file" id="uploadName" name="customer_upload" required>
 </div>
@@ -40,12 +18,6 @@
 @enderror
     <button type="submit" class="btn btn-info btn-primary ">Import Excel File</button>
     </form> 
-
-
- {{-- <div>
-  <button type="button" class="btn btn-sm" data-toggle="modal" data-target="#albumModal">
-  create new album</button>
-</div> --}}
   <div >
     {{$dataTable->table(['class' => 'table table-bordered table-striped table-hover '], true)}}
   </div>
