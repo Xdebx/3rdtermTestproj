@@ -38,7 +38,8 @@ class PetController extends Controller
      */
     public function create()
     {
-        //
+        $customers = Customer::pluck("lname", "customer_id");
+        return view::make("pet.create", ["customers" => $customers]);
     }
 
     /**

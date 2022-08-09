@@ -8,11 +8,11 @@
                 <p>{{ Session::get('success') }}</p>
             </div><br />
         @endif
-        <div>
+        {{-- <div>
             <button type="button" class="btn btn-sm" data-toggle="modal" data-target="#serviceModal">
                     create new Grooming Services</button>
           
-        </div>
+        </div> --}}
         <div class="col-xs-6">
             <form method="post" enctype="multipart/form-data" action="{{ url('/Grooming/import') }}">
                 @csrf
@@ -23,6 +23,10 @@
         @enderror
         <button type="submit" class="btn btn-info btn-primary ">Import Excel File</button>
         </form>
+        <a href="#" data-toggle="modal" data-target="#serviceModal" class="btn btn-primary a-btn-slide-text">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            <span><strong>Add new grooming</strong></span>            
+        </a>
         <div>
             {{ $dataTable->table(['class' => 'table table-bordered table-striped table-hover '], true) }}
         </div>

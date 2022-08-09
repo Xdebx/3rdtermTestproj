@@ -42,6 +42,7 @@
           <a class="navbar-brand" href="{{ url('employees') }}">Employees</a>
           <a class="navbar-brand" href="{{ url('grooming') }}">Grooming Services</a>
           <a class="navbar-brand" href="{{ url('pets') }}">Pets</a>
+          <a class="navbar-brand" href="{{ url('consults') }}">Consultation</a>
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->

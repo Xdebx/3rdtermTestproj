@@ -8,24 +8,14 @@
                 <p>{{ Session::get('success') }}</p>
             </div><br />
         @endif
-        <div>
+        <center><div>
             <button type="button" class="btn btn-sm" data-toggle="modal" data-target="#petModal">
                     create new pet</button>
-          
         </div>
-        <div class="col-xs-6">
-            <form method="post" enctype="multipart/form-data" action="{{ url('/pet/import') }}">
-                @csrf
-                <input type="file" id="uploadName" name="pet_upload" required>
-        </div>
-        @error('pet_upload')
-            <small>{{ $message }}</small>
-        @enderror
-        <button type="submit" class="btn btn-info btn-primary ">Import Excel File</button>
-        </form>
-        <div>
+    </center>
+        {{-- <div>
             {{ $dataTable->table(['class' => 'table table-bordered table-striped table-hover '], true) }}
-        </div>
+        </div> --}}
         <div class="modal" id="petModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
             aria-hidden="true">
             <div class="modal-dialog" role="document" style="width:75%;">
@@ -94,7 +84,7 @@
             </div>
         </div>
     </div>
-    @push('scripts')
+    {{-- @push('scripts')
         {{ $dataTable->scripts() }}
-    @endpush
+    @endpush --}}
 @endsection

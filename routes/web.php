@@ -31,6 +31,7 @@ Route::get('/', function () {
   Route::delete('/Employee/delete/{id}',['uses' => 'EmployeeController@destroy','as' => 'employee.destroy']);
   Route::post('/employee/import', 'EmployeeController@import')->name('employee-import');
 
+
   Route::get('/Grooming/create','GroomingServiceController@create')->name('grooming.create');
   Route::post('/Grooming/store','GroomingServiceController@store')->name('grooming.store');
   Route::get('/Grooming/edit/{id}','GroomingServiceController@edit')->name('grooming.edit');
@@ -38,14 +39,22 @@ Route::get('/', function () {
   Route::delete('/Grooming/delete/{id}',['uses' => 'GroomingServiceController@destroy','as' => 'grooming.destroy']);
   Route::post('/Grooming/import', 'GroomingServiceController@import')->name('grooming-import');
 
+
   Route::get('/Pet/create','PetController@create')->name('pet.create');
   Route::post('/Pet/store','PetController@store')->name('pet.store');
   Route::get('/Pet/edit/{id}','PetController@edit')->name('pet.edit')->middleware('role:admin');
   Route::put('/Pet/update{id}',['uses' => 'PetController@update','as' => 'pet.update']);
-  Route::delete('/Pet/delete/{id}',['uses' => 'PetController@destroy','as' => 'pet.destroy']);
+  Route::delete('/Pet/delete/{id}',['uses' => 'PetController@destroy','as' => 'pet.destroy'])->middleware('role:admin');
   Route::post('/Pet/import', 'PetController@import')->name('pet-import');
 
- 
+//   Route::resource('consultation', 'ConsultationController');
+Route::get('/Consult/create','ConsultationController@create')->name('consult.create');
+Route::post('/Consult/store','ConsultationController@store')->name('consult.store');
+Route::get('/Consult/edit/{id}','ConsultationController@edit')->name('consult.edit');
+Route::put('/Consult/update{id}',['uses' => 'ConsultationController@update','as' => 'consult.update']);
+Route::delete('/Consult/delete/{id}',['uses' => 'ConsultationController@destroy','as' => 'consult.destroy']);
+
+
 
   Route::group(['prefix' => 'user'], function(){
    Route::group(['middleware' => 'guest'], function() {
@@ -75,8 +84,6 @@ Route::get('/', function () {
                         'uses' => 'UserController@postEsignup',
                         'as' => 'user.esignup',
                     ]);
-
-
 
          });
    
@@ -113,8 +120,14 @@ Route::get('/', function () {
     Route::get('/pets', [
       'uses' => 'PetController@getPets',
         'as' => 'getPets',
-        'middleware' => 'role:customer',   ]);
-    
+        'middleware' => 'role:admin',   ]);
+
+    Route::get('/consults', [
+         'uses' => 'ConsultationController@getConsults',
+           'as' => 'getConsults',
+           'middleware' => 'role:admin',   ]);
+
+        
      Route::get('logout',[
           'uses' => 'LoginController@logout',
           'as' => 'user.logout',

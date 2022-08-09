@@ -32,4 +32,9 @@ class Employee extends Model
     {
         return $this->belongsTo('App\Models\User', 'user_id');
     }
+    
+    public function consults()
+    {
+        return $this->hasMany('App\Models\Consultation', 'emp_id');
+    }
 }

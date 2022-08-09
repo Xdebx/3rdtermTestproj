@@ -34,11 +34,8 @@ class Pet extends Model
         // return $this->belongsTo(Customer::class, 'customer_id');
        
     }
-    
-    public function breeds() 
-    {
-        return $this->belongsTo('App\Models\Breed', 'petb_id');
-        // return $this->belongsTo(Breed::class, 'petb_id');
-        
+
+    public function consults(){
+        return $this->hasMany('App\Models\Consultation', 'pet_id');
     }
 }

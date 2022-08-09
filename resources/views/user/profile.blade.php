@@ -231,6 +231,12 @@ p {
                                                             <div class="card-block">
                                                                 <h6 class="m-b-40 p-b-5 b-b-default f-w-600"><a href="{{route('customer.edit',$customer->customer_id)}}">
                                                                     <i class="fas fa-edit" aria-hidden="true" style="font-size:20px" > Edit </i></a></h6>
+
+                                                                    <div class="pt-8 pb-4 px-8">
+                                                                        <a href="{{ route('pet.create') }}"
+                                                                            class="p-3 border-none italic text-white bg-black text-lg"
+                                                                            style="font-size:20px">Add my pet</a>
+                                                                    </div>
                                                                 
                                                                 <center><h6 class="m-b-20 p-b-5 b-b-default f-w-600">INFORMATION</h6></center>
                                                                 
