@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Customer;
 use App\Models\Employee;
+use App\Models\Admin;
 use Auth;
 use App\Models\Order;
 use App\Events\SendMail;
@@ -16,6 +17,8 @@ class UserController extends Controller
    public function __construct(){
         $this->total = 0;
     }
+//!====================================================================================
+//! CUSTOMER
     public function getSignup(){
         return view('user.signup');
     }
@@ -29,7 +32,8 @@ class UserController extends Controller
             'email' => $request->input('email'),
             'password' => bcrypt($request->input('password')),
             // 'role' => $request->input('role')
-            'role' => $request->input('role').''.$request->role='customer'
+            // 'role' => $request->input('role').''.$request->role='customer'
+             'role' => 'customer'
         ]);
          $user->save();
          $customer = new Customer;
@@ -78,6 +82,8 @@ class UserController extends Controller
         return view('user.esignup');
     }
 
+//!====================================================================================
+//! EMPLOYEE
     public function postEsignup(Request $request){
         $this->validate($request, [
             'email' => 'email| required| unique:users',
@@ -89,11 +95,12 @@ class UserController extends Controller
             'password' => bcrypt($request->input('password')),
             // 'role' => $request->input('role')
             // 'role' => $request->input('role').''.$request->role='admin'
-              'role' => 'admin'
+              'role' => 'employee'
         ]);
         $user->save();
         $employee = new employee;
         $employee->user_id = $user->id;
+        $employee->position = $request->position;
         $employee->title = $request->title;
         $employee->title = $request->title;
         $employee->fname = $request->fname;
@@ -130,8 +137,60 @@ class UserController extends Controller
             ->get();
         return view('user.eprofile',compact('employees'));
         }
-    
+//!====================================================================================
+//! ADMIN
+        public function getAsignup(){
+            return view('user.asignup');
+        }
 
+
+        public function postAdminSignup(Request $request){
+            $this->validate($request, [
+                'email' => 'email| required| unique:users',
+                'password' => 'required| min:4'
+            ]);
+             $user = new User([
+              'name' => $request->input('fname'),
+                'email' => $request->input('email'),
+                'password' => bcrypt($request->input('password')),
+                  'role' => 'admin'
+            ]);
+            $user->save();
+            $admin = new Admin;
+            $admin->user_id = $user->id;
+            $admin->fname = $request->fname;
+            $admin->addressline = $request->addressline;
+          
+            $request->validate([
+               'image' => 'image' 
+           ]);
+    
+            if($file = $request->hasFile('image')) {
+               $file = $request->file('image') ;
+               $fileName = uniqid().'_'.$file->getClientOriginalName();
+               $destinationPath = public_path().'/images';
+               $input['img_path'] = $fileName;
+               $file->move($destinationPath,$fileName);
+           }
+            $admin->img_path= $input['img_path'];  
+            $admin->save();
+            Auth::login($user);
+            // return redirect()->route('dashboard.index'); //dapat ito
+            return redirect()->route('user.aprofile'); // pansamantala
+        }
+
+        public function getAprofile(){
+            $profile = Auth::user()->id;
+            $admins = DB::table('admins')
+        
+                ->leftJoin('users', 'id','admins.user_id')
+                ->select('admins.admin_id','users.email','admins.fname','admins.addressline','admins.img_path')
+                ->where('admins.user_id','=',$profile)
+                ->get();
+            return view('user.aprofile',compact('admins'));
+            }
+       
+    
 
     public function getLogout(){
         Auth::logout();

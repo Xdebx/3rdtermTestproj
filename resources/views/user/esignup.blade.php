@@ -8,6 +8,18 @@
             @endif
             <form class="" action="{{ route('user.esignup') }}" method="post" enctype="multipart/form-data">
                 {{ csrf_field() }}
+
+                <div class="form-group">
+    <label data-error="wrong" data-success="right" for="position"
+        style="display: inline-block; width: 150px; ">Position</label><i style="color:rgb(0, 132, 255)"></i>
+        <div class="form-group">
+        <select class="form-control" name="position" id="position">
+            <option value="Veterinarian">Veterinarian</option>
+            <option value="Assistant">Assistant</option>
+            <option value="Groomer">Groomer</option>
+        </select>
+        </div>
+        </div>
                 <div class="form-group">
                     <label for="title"> Title: </label>
                     <input type="text" name="title" id="title" class="form-control">

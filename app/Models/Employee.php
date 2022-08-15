@@ -13,13 +13,11 @@ class Employee extends Model
     public $timestamps = true;
 
     protected $guarded = ['emp_id','img_path'];
-    protected $fillable = ['fname','lname',
-        'title','addressline','zipcode',
-        'phone','img_path'
-    ];
+    protected $fillable = ['fname','lname', 'position','title','addressline','zipcode', 'phone','img_path'];
 
    public static $rules = [ 
                'title' =>'required|min:3',
+               'position'=>'required|alpha',
                'lname'=>'required|alpha',
                'fname'=>'required',
                 'addressline'=>'required',
@@ -36,5 +34,9 @@ class Employee extends Model
     public function consults()
     {
         return $this->hasMany('App\Models\Consultation', 'emp_id');
+    }
+    public function transacts()
+    {
+        return $this->hasMany('App\Models\Transaction', 'emp_id');
     }
 }

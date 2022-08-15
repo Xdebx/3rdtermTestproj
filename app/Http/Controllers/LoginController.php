@@ -11,22 +11,26 @@ class LoginController extends Controller
         ]);
  if(auth()->attempt(array('email' => $request->email, 'password' => $request->password)))
         {
-            if (auth()->user()->role === 'admin') {
+            if (auth()->user()->role === 'admin') 
+            {
                 return redirect()->route('dashboard.index');
             } 
-            else if (auth()->user()->role === 'encoder'){
-             return redirect()->route('item.index');
+            else if (auth()->user()->role === 'employee')
+            {
+             return redirect()->route('user.eprofile');
             } 
-            else {
+            else 
+            {
                 return redirect()->route('user.profile');
             }
         }
-        else{
+        else
+        {
             return redirect()->route('user.signin')->with('error','Email-Address And Password Are Wrong.');
         }
      }
      public function logout(){
         Auth::logout();
-        return redirect()->guest('/');
+        return redirect()->guest('/user.signin');
     }
 }

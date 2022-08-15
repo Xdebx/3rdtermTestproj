@@ -64,6 +64,7 @@ class EmployeeController extends Controller
          $user->save();
          $employee = new employee;
          $employee->user_id = $user->id;
+         $employee->position = $request->position;
          $employee->title = $request->title;
          $employee->title = $request->title;
          $employee->fname = $request->fname;
@@ -107,19 +108,70 @@ class EmployeeController extends Controller
      * @param  \App\Models\Employee  $employee
      * @return \Illuminate\Http\Response
      */
+    // public function edit($emp_id)
+    // {
+    //     $employee = Employee::find($emp_id);
+    //     $profile = Auth::user()->id;
+    //     $users = DB::table('employees')
+
+    //         ->Join('users','users.id','=','employees.user_id')
+    //         ->select('users.*')
+    //         ->where('users.id','=',$profile)
+    //         ->get();
+    //     return view('employee.edit',compact('users','employee'));
+
+    // }
+
+    // public function editUser($user_id)
+    // {
+    //     // $user = User::find($user_id);
+    //     // $employee = Employee::find($emp_id);
+    //     // $profile = Auth::user()->id;
+    //     // $users = DB::table('employees')
+
+    //     //     ->Join('users','users.id','=','employees.user_id')
+    //     //     ->select('users.*')
+    //     //     ->where('users.id','=',$profile)
+    //     //     ->get();
+    //     // return view('employee.useredit',compact('users','employee'));
+
+
+
+
+    //          $users = User::find($user_id);
+    //         $profile = Auth::user()->id;
+    //         $admins = DB::table('admins')
+        
+    //             ->leftJoin('users', 'id','admins.user_id')
+    //             ->select('admins.admin_id','users.email','admins.fname','admins.addressline','admins.img_path')
+    //             ->where('admins.user_id','=',$profile)
+    //             ->get();
+    //         return view('employee.useredit',compact('admins','profile'));
+
+    // }
+
     public function edit($emp_id)
-    {
-        $employee = Employee::find($emp_id);
-        $profile = Auth::user()->id;
-        $users = DB::table('employees')
+        {
+            $employees = Employee::find($emp_id);
+            return view("employee.edit", compact('employees'));
+        }
+    
+        /**
+         * Update the specified resource in storage.
+         *
+         * @param  \Illuminate\Http\Request  $request
+         * @param  int  $id
+         * @return \Illuminate\Http\Response
+         */
+        public function update(Request $request, $emp_id)
+        {
+            $employees = Employee::find($emp_id);
+            $employees->position = $request->input('position');
+            $employees->update();
 
-            ->Join('users','users.id','=','employees.user_id')
-            ->select('users.*')
-            ->where('users.id','=',$profile)
-            ->get();
-        return view('employee.edit',compact('users','employee'));
+            return Redirect::to('/getEmployees')->with('success','Employee has been updated!');
+        }
 
-    }
     /**
      * Update the specified resource in storage.
      *
@@ -127,39 +179,59 @@ class EmployeeController extends Controller
      * @param  \App\Models\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,  $emp_id)
+    // public function update(Request $request,  $emp_id)
+    // {
+    //     $employee = Employee::find($emp_id);
+
+    //     $validator = Validator::make($request->all(), Employee::$rules);
+
+    //                 if ($validator->fails()) {
+    //                     return redirect()->back()->withInput()->withErrors($validator);
+    //                 }
+    //                 if ($validator->passes()) {
+    //      $input = $request->all();
+
+    //      $request->validate([
+    //         'image' => 'image' 
+    //     ]);
+
+    //      if($file = $request->hasFile('image')) {
+    //         $file = $request->file('image') ;
+    //         $fileName = uniqid().'_'.$file->getClientOriginalName();
+    //         $destinationPath = public_path().'/images';
+    //         $input['img_path'] = $fileName;
+    //         $file->move($destinationPath,$fileName);
+    //     }
+    // }
+    //     $employee->update($input);
+    //     $current_user = auth()->user();
+    //     $current_user->update([
+    //         'name' => $request->input('fname').' '.$request->lname,
+    //         'email' => $request->input('email'),
+    //         'password' => bcrypt($request->input('password')),
+    //     ]);
+
+    //     return Redirect::to('/employees')->with('success','Employee has been updated!');
+       
+    // }
+
+
+
+    public function updateUser(Request $request,  $id)
     {
-        $employee = Employee::find($emp_id);
+        $user = User::find($id);
 
-        $validator = Validator::make($request->all(), Employee::$rules);
-
-                    if ($validator->fails()) {
-                        return redirect()->back()->withInput()->withErrors($validator);
-                    }
-                    if ($validator->passes()) {
-         $input = $request->all();
-
-         $request->validate([
-            'image' => 'image' 
-        ]);
-
-         if($file = $request->hasFile('image')) {
-            $file = $request->file('image') ;
-            $fileName = uniqid().'_'.$file->getClientOriginalName();
-            $destinationPath = public_path().'/images';
-            $input['img_path'] = $fileName;
-            $file->move($destinationPath,$fileName);
+        $validator = Validator::make($request->all(), User::$rules);
+        
+        if ($validator->fails()) {
+            // dd($validator);
+            return redirect()->back()->withInput()->withErrors($validator);
         }
-    }
-        $employee->update($input);
-        $current_user = auth()->user();
-        $current_user->update([
-            'name' => $request->input('fname').' '.$request->lname,
-            'email' => $request->input('email'),
-            'password' => bcrypt($request->input('password')),
-        ]);
 
-        return Redirect::to('/employees')->with('success','Employee has been updated!');
+                        $input = $request->all();           
+                        $breed->update($input);
+        // return Redirect::to('/breed')->with('success','breed has been updated!');
+        return Redirect::to('user.aprofile');
        
     }
 

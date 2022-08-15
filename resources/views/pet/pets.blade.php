@@ -8,11 +8,11 @@
                 <p>{{ Session::get('success') }}</p>
             </div><br />
         @endif
-        <div>
+        {{-- <div>
             <button type="button" class="btn btn-sm" data-toggle="modal" data-target="#petModal">
                     create new pet</button>
           
-        </div>
+        </div> --}}
         <div class="col-xs-6">
             <form method="post" enctype="multipart/form-data" action="{{ url('/pet/import') }}">
                 @csrf

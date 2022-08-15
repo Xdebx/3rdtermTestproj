@@ -48,32 +48,44 @@ class ConsultationController extends Controller
     public function store(Request $request)
     {   
         // $input = $request->all();
-        $employees = Employee::find($request->emp_id);
-        $pets = Pet::find($request->pet_id);
+        // $employees = Employee::find($request->emp_id);
+        // $pets = Pet::find($request->pet_id);
 
-        $consults = new Consultation();
-        $consults->employee()->associate($employees);
-        $consults->pet()->associate($pets);   
-        $consults->observation = $request->observation;
-        $consults->consult_cost = $request->consult_cost;
-        // $consults = Consultation::create($input);
-        // $consults->save($input);
-        $consults->save();
-        foreach ($request->disease_id as $disease_id) {
-            DB::table('consultation_disease')->insert(
-                        ['disease_disease_id' => $disease_id, 
-                         'consultation_consult_id' => $consults->consult_id]
-                        );
-            if(!(empty($request->disease_id))) 
+        // $consults = new Consultation();
+        // $consults->employee()->associate($employees);
+        // $consults->pet()->associate($pets);   
+        // $consults->observation = $request->observation;
+        // $consults->consult_cost = $request->consult_cost;
+        // // $consults = Consultation::create($input);
+        // // $consults->save($input);
+        // $consults->save();
+        // foreach ($request->disease_id as $disease_id) {
+        //     DB::table('consultation_disease')->insert(
+        //                 ['disease_disease_id' => $disease_id, 
+        //                  'consultation_consult_id' => $consults->consult_id]
+        //                 );
+        //     if(!(empty($request->disease_id))) 
+        //         {
+        //             $consults->disease()->attach($request->$disease_id);
+        //         } 
+        //     }
+        //     Event::dispatch(new SendCheckupMail($consults));
+        //     return Redirect::to('/consults')->with('success','Consultation created successfully!');
+
+
+
+        $input = $request->all();
+        $consults = Consultation::create($input);
+        // Event::dispatch(new SendCheckupMail($consults));
+           if(!(empty($request->disease_id))) 
                 {
-                    $consults->disease()->attach($request->$disease_id);
+                    $consults->disease()->attach($request->disease_id);
                 } 
-            }
-            Event::dispatch(new SendCheckupMail($consults));
-            return Redirect::to('/consults')->with('success','Consultation created successfully!');
-            
-
+                Event::dispatch(new SendCheckupMail($consults));
+                return Redirect::to('/consults')->with('success','Consultation created successfully!');
     }
+
+   
 
     /**
      * Display the specified resource.

@@ -21,8 +21,8 @@ class GroomingService extends Model
   ];
      // public $searchableType = 'List of Service';
 
-     //public function transactions() {
-     //return $this->belongsToMany(Transaction::class,'groomingline','groominginfo_id','service_id');
-     // return $this->belongToMany(Order::class);
-  // }
+     public function transacts() {
+     return $this->belongsToMany(Transaction::class,'groomingline','groominginfo_id','service_id');
+  }
+  
 }

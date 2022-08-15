@@ -169,5 +169,15 @@ class PetController extends Controller
         // $pet_breed = Breed::pluck('pbreed','petb_id');
         // return $dataTable->render('pet.pets',compact('customers'));
     }
+
+    public function import(Request $request) {
+        //! import excel file
+       $request->validate([
+               'pet_upload' => ['required', new ExcelRule($request->file('pet_upload'))],
+       ]);
+       // dd($request);
+       Excel::import(new PetImports, request()->file('pet_upload'));
+        return redirect()->back()->with('success', 'Excel file Imported Successfully');
+   }
    
 }

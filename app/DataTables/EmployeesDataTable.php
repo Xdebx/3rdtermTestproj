@@ -30,8 +30,8 @@ class EmployeesDataTable extends DataTable
              return datatables()
                  ->eloquent($employees)
                  ->addColumn('action', function($row) {
-                        //  return "<a href=". route('employee.edit', $row->emp_id). " class=\"btn btn-warning\">Edit</a> 
-                        return"
+                         return "<a href=". route('employee.edit', $row->emp_id). " class=\"btn btn-warning\">Edit</a> 
+                       
                         <form action=". route('employee.destroy', $row->user_id). " method= \"POST\" >". csrf_field() . '<input name="_method" type="hidden" value="DELETE">
                          <button class="btn btn-danger" type="submit">Delete</button>
                            </form>';
@@ -101,6 +101,7 @@ class EmployeesDataTable extends DataTable
         return [
             
             Column::make('emp_id'),
+            Column::make('position')->title('Positions'),
             Column::make('lname')->title('Employees'),
             Column::make('addressline')->title('Addressline'),
             Column::make('zipcode')->title('Zipcode'),

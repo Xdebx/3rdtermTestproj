@@ -3,7 +3,7 @@
  use Session;
  class Cart
 {
-        public $services = null;
+       public $services = null;
         public $totalQty = 0;
         public $totalPrice = 0;
 
@@ -15,7 +15,6 @@
             $this->totalPrice = $oldCart->totalPrice;
         }
     }
-
     public function add($service, $id){
         //dd($this->services);
         $storedservice = ['qty'=> 0, 'price'=>$service->service_cost, 'service'=> $service];

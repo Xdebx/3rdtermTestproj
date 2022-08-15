@@ -45,6 +45,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public static $rules = [ 
+        'name'=>'required',
+        'email'=>'required',
+      ];
 
     public function customers() 
     {
@@ -54,5 +58,9 @@ class User extends Authenticatable
     public function employees() 
     {
         return $this->hasOne('App\Models\Employee', 'user_id');
+    }
+    public function admins() 
+    {
+        return $this->hasOne('App\Models\Admin', 'user_id');
     }
 }

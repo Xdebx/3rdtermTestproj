@@ -41,4 +41,9 @@ class Customer extends Model
     {
         return $this->belongsTo('App\Models\User', 'user_id')->withTrashed();
     }
+
+    public function transacts()
+    {
+        return $this->hasMany('App\Models\Transaction', 'customer_id');
+    }
 }

@@ -34,6 +34,18 @@
         {{csrf_field()}}
           
 <div class="modal-body mx-3" id="inputEmployeeModal">
+  
+  <div class="md-form mb-5"></div>
+    <label data-error="wrong" data-success="right" for="position"
+        style="display: inline-block; width: 150px; ">Position</label><i style="color:rgb(0, 132, 255)">*</i>
+        <div class="md-form mb-5"> </div>
+        <select class="form-control" name="position" id="position">
+            <option value="Veterinarian">Veterinarian</option>
+            <option value="Assistant">Assistant</option>
+            <option value="Groomer">Groomer</option>
+        </select>
+    </div>
+</div>
   <div class="md-form mb-5"> </div>
       <i class="fa-solid fa-compact-disc prefix grey-text"></i>
         <label data-error="wrong" data-success="right" for="name" style="display: inline-block;

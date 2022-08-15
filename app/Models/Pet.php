@@ -38,4 +38,8 @@ class Pet extends Model
     public function consults(){
         return $this->hasMany('App\Models\Consultation', 'pet_id');
     }
+    public function transacts()
+    {
+        return $this->hasMany('App\Models\Transaction', 'pet_id');
+    }
 }

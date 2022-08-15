@@ -33,11 +33,24 @@
       <form method="post" action="{{route ('consult.store')}}" >
         {{csrf_field()}}
         <div class="modal-body mx-3" id="inputConsultModal">
-            <div class="md-form mb-5"></div>
+          {{-- <div class="md-form mb-5" style="position: absolute; left: -100rem;">
+      {!! Form::text('emp_id',App\Models\Employee::where('position','Veterinarian')->orWhere('user_id',
+            Auth::id())->latest()->pluck('user_id')->first(),['readonly'],null,['class' => 'form-control',],) !!}
+
+        </div> --}}
+        <div class="md-form mb-5"> </div>
+                        <div style="position: absolute; top: -9999px; left: -9999px;">
+                        <label data-error="wrong" data-success="right" for="name"
+                            style="display: inline-block; width: 150px; color:rgb(0, 0, 0)">Owner name</label>
+        {!! Form::text('emp_id', App\Models\Employee::where('user_id', Auth::id())->pluck('emp_id')->first(),
+                                ['readonly'], null,['class' => 'form-control validate',]) !!}
+                           </div>
+
+            {{-- <div class="md-form mb-5"></div>
                 <i class="fas fa-cat"></i>
                 <label data-error="wrong" data-success="right" for="name"
                                 style="display: inline-block; width: 150px; color:rgb(0, 0, 0)">Veterinarian</label>
-                  {!! Form::select('emp_id', App\Models\Employee::pluck('lname','emp_id'), null,['class' => 'form-control']) !!}
+                  {!! Form::select('emp_id', App\Models\Employee::pluck('lname','emp_id'), null,['class' => 'form-control']) !!} --}}
          <div class="md-form mb-5"></div>
             <i class="fas fa-signature"></i>
             <label data-error="wrong" data-success="right" for="name"
@@ -65,6 +78,11 @@
             {!!Form::label('disease', $disease->disease_name ,array('class'=>'form-check-label')) !!}
         </div>
     @endforeach
+
+
+
+
+
 
     {{-- <div class="md-form mb-5"></div> --}}
     <div class="modal-footer d-flex justify-content-center">

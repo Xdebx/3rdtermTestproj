@@ -37,12 +37,13 @@
               <span class="icon-bar"></span>
           </button>
 
-          <a class="navbar-brand" href="home"><strong>PET</strong><span>CLINIC</span></a>
+          <a class="navbar-brand" href="{{ route('transact.index') }}"><strong>PET</strong><span>CLINIC</span></a>
           <a class="navbar-brand" href="{{ url('customers') }}">Customers</a>
           <a class="navbar-brand" href="{{ url('employees') }}">Employees</a>
           <a class="navbar-brand" href="{{ url('grooming') }}">Grooming Services</a>
           <a class="navbar-brand" href="{{ url('pets') }}">Pets</a>
           <a class="navbar-brand" href="{{ url('consults') }}">Consultation</a>
+          <a class="navbar-brand" href="{{ route('getTransacts') }}">Transaction</a>
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
@@ -56,7 +57,7 @@
               {{-- @if (Auth::check()) --}}
               <li class="dropdown">
               <li>
-                  <a href="#">
+                  <a href="{{ route('service.shoppingCart') }}">
                       <i class="fa fa-shopping-cart" aria-hidden="true"></i> Shopping Cart
                       <span class="badge">{{ Session::has('cart') ? Session::get('cart')->totalQty : '' }}</span>
                   </a>
@@ -68,6 +69,12 @@
                   <ul class="dropdown-menu">
                       @if (Auth::check())
                           @if (auth()->user()->role === 'admin')
+                              <li><a href="{{ route('user.aprofile') }}"><i class="fa fa-user"></i>
+                                      <strong>{{ Auth::User()->name }}</strong><i style="font-size:15px; color:red">
+                                          {{ Auth::User()->role }}</i></a></li>
+                              <li role="separator" class="divider"></li>
+                              <li><a href="{{ route('user.logout') }}">Logout</a></li>
+                           @elseif (auth()->user()->role === 'employee')
                               <li><a href="{{ route('user.eprofile') }}"><i class="fa fa-user"></i>
                                       <strong>{{ Auth::User()->name }}</strong><i style="font-size:15px; color:red">
                                           {{ Auth::User()->role }}</i></a></li>
@@ -82,9 +89,11 @@
                           @endif
                       @else
                           <li><a href="{{ route('user.signup') }}"><i class="fas fa-user-circle"
-                                      style="color:red"></i> Signup as customer</a></li>
+                                      style="color:rgb(111, 255, 0)"></i> Signup as customer</a></li>
                           <li><a href="{{ route('user.esignup') }}"><i class="fas fa-user" style="color:blue"></i>
-                                  Signup as admin</a></li>
+                                  Signup as veterinarian</a></li>
+                         <li><a href="{{ route('user.asignup') }}"><i class="fas fa-user" style="color:rgba(255, 0, 0, 0.545)"></i>
+                                    Signup as admin</a></li>
                           <li><a href="{{ route('user.signin') }}">Signin</a></li>
                       @endif
                       {{-- <i class="fa-solid fa-user-crown"></i> --}}
